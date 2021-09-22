@@ -1,0 +1,8 @@
+Flask==1.1.4
+Flask-SQLAlchemy==2.5.1
+Flask-RESTful==0.3.9
+PyMySQL==1.0.2
+twilio==6.61.0
+cryptography==3.4.7
+Flask-Testing==0.8.1
+Flask-Moment==1.0.1

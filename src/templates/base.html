@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Superb SMS Bot :)</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+
+    <style>
+        th {text-align: center;}
+        tr {text-align: center;}
+        caption {text-align: center; font-weight: bold;}
+    </style>
+
+    {{ moment.include_moment() }}
+
+</head>
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title text-center">Initial Messages</h4>
+                </div>
+                <div class="card-body">
+                    <div class="toolbar">
+                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                    </div>
+
+                    <table id="initial_messages" class="table table-striped" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>From</th>
+                                <th>Message Body</th>
+                                <th>Response</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for initial_message in initial_messages %}
+                            <tr>
+                                <td>{{ moment(initial_message['timestamp'], local=False).format('MMMM Do YYYY, h:mm A') }}</td>
+                                <td>{{ initial_message['user_identifier'] }}</td>
+                                <td>{{ initial_message['current_input'] }}</td>
+                                <td>{{ initial_message['_message_response'] }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title text-center">Feedback Messages</h4>
+                </div>
+                <div class="card-body">
+                    <div class="toolbar">
+                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                    </div>
+
+                    <table id="feedback_messages" class="table table-striped" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>From</th>
+                                <th>For CPT Code</th>
+                                <th>Feedback</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for feedback_message in feedback_messages %}
+                            <tr>
+                                <td>{{ moment(feedback_message['timestamp'], local=False).format('MMMM Do YYYY, h:mm A') }}</td>
+                                <td>{{ feedback_message['user_identifier'] }}</td>
+                                <td>{{ feedback_message['_feedback_for_code'] }}</td>
+                                <td>{{ feedback_message['current_input'] }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+  $('#initial_messages').DataTable({
+    "order": [[ 0, "desc" ]],
+    "paging": true,
+    "pagingType": "first_last_numbers",
+    "iDisplayLength": 10,
+    "lengthMenu": [
+      [10, 50, 100, "All"],
+      [10, 50, 100, "All"]
+    ],
+    responsive: true,
+    language: {
+      search: "_INPUT_",
+      searchPlaceholder: "Search",
+    }
+  });
+
+  $('#feedback_messages').DataTable({
+    "order": [[ 0, "desc" ]],
+    "paging": true,
+    "pagingType": "first_last_numbers",
+    "iDisplayLength": 10,
+    "lengthMenu": [
+      [10, 50, 100, "All"],
+      [10, 50, 100, "All"]
+    ],
+    responsive: true,
+    language: {
+      search: "_INPUT_",
+      searchPlaceholder: "Search",
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>
